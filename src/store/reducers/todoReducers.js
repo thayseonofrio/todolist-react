@@ -1,10 +1,11 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    todos = []
+    todos: []
 }
 
 export const reducer = (state = initialState, action) => {
+    let todos = [...state.todos];
     switch (action.type) {
         case actionTypes.ADD_TODO:
             return {
@@ -12,14 +13,12 @@ export const reducer = (state = initialState, action) => {
                 todos: state.todos.concat(action.data)
             }
         case actionTypes.DELETE_TODO:
-            let todos = [...state.todos];
             todos = todos.filter(todo => todo.id !== action.id);
             return {
                 ...state,
                 todos: todos
             }
         case actionTypes.EDIT_TODO:
-            let todos = [...state.todos];
             todos[action.id] = action.data;
             return {
                 ...state,
