@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as todoActions from '../store/actions/todoActions';
-import Input from '../components/Input/Input';
-import Item from '../components/Item/Item';
+import * as todoActions from '../../store/actions/todoActions';
+import Input from '../../components/Input/Input';
+import Item from '../../components/Item/Item';
+import classes from './ToDo.module.css';
+
 class ToDo extends Component {
 
     state = {
@@ -14,7 +16,8 @@ class ToDo extends Component {
         if (event.key === 'Enter') {
             this.props.onAddTodo({
                 description: this.state.todoDescription,
-                id: Date.now()
+                id: Date.now(),
+                done: false
             });
             this.setState({
                 todoDescription: ''
@@ -35,17 +38,19 @@ class ToDo extends Component {
                 <Item 
                     key={todo.id} 
                     description={todo.description} 
-                    id={todo.id} /> 
+                    id={todo.id}
+                    done={todo.done} /> 
             ))
         }
         return (
-            <div>
-                {todos}
-                <Item></Item>
+            <div className={classes.ToDo}>
+                <h1> The Awesome To Do List </h1>
                 <Input 
+                    placeholder="Add a To Do"
                     onInputKeyPress={(event) => this.onKeyPressHandler(event)}
                     onInputChange={(event) => this.onChangeHandler(event)}
                     value={this.state.todoDescription}/>
+                {todos}
             </div>
         );
     }

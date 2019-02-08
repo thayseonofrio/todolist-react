@@ -24,8 +24,18 @@ export const reducer = (state = initialState, action) => {
                     todo.description = action.description
                 }
                 return todo;
-            })
-            console.log(todos);
+            });
+            return {
+                ...state,
+                todos: todos
+            }
+        case actionTypes.TOGGLE_TODO:
+            todos = todos.map(todo => {
+                if (todo.id === action.id) {
+                    todo.done = !todo.done
+                }
+                return todo;
+            });
             return {
                 ...state,
                 todos: todos

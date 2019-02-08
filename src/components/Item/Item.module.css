@@ -1,0 +1,18 @@
+.Item {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.enabledInput {
+    color: #000000;
+}
+
+.disabledInput {
+    color: #ccc;
+    border: none;
+}
+
+.done {
+    text-decoration: line-through;
+}

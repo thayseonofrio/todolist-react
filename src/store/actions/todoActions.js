@@ -21,3 +21,10 @@ export const editTodo = (id, description) => {
         description: description
     }
 } 
+
+export const toggleTodo = (id) => {
+    return {
+        type: actionTypes.TOGGLE_TODO,
+        id: id
+    }
+}

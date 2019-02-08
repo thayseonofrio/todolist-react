@@ -1,0 +1,13 @@
+.Input {
+    width: 90%;
+    line-height: 20px;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px #ccc solid;
+}
+
+.Input:focus {
+    outline-color: #f0f8ff
+}
