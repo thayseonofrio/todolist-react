@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as todoActions from '../store/actions/todoActions';
 import Input from '../components/Input/Input';
-
+import Item from '../components/Item/Item';
 class ToDo extends Component {
 
     state = {
@@ -16,6 +16,9 @@ class ToDo extends Component {
                 description: this.state.todoDescription,
                 id: Date.now()
             });
+            this.setState({
+                todoDescription: ''
+            })
         }
     }
 
@@ -26,14 +29,19 @@ class ToDo extends Component {
     }
 
     render() {
-        const todos = this.props.todos.map(todo => (
-            <li key={todo.id}>{todo.description}</li>
-        ))
+        let todos = null;
+        if (this.props.todos) {
+            todos = this.props.todos.map(todo => (
+                <Item 
+                    key={todo.id} 
+                    description={todo.description} 
+                    id={todo.id} /> 
+            ))
+        }
         return (
             <div>
-                <ul>
-                    {todos}
-                </ul>
+                {todos}
+                <Item></Item>
                 <Input 
                     onInputKeyPress={(event) => this.onKeyPressHandler(event)}
                     onInputChange={(event) => this.onChangeHandler(event)}
