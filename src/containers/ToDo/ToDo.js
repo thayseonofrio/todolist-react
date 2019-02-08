@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as todoActions from '../../store/actions/todoActions';
 import Input from '../../components/Input/Input';
 import Item from '../../components/Item/Item';
+import Summary from '../../components/Summary/Summary';
 import classes from './ToDo.module.css';
 
 class ToDo extends Component {
@@ -50,7 +51,10 @@ class ToDo extends Component {
                     onInputKeyPress={(event) => this.onKeyPressHandler(event)}
                     onInputChange={(event) => this.onChangeHandler(event)}
                     value={this.state.todoDescription}/>
-                {todos}
+                <div className={classes.Items}>
+                    {todos}
+                </div>
+                <Summary />
             </div>
         );
     }
