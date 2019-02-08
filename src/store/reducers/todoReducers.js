@@ -19,7 +19,13 @@ export const reducer = (state = initialState, action) => {
                 todos: todos
             }
         case actionTypes.EDIT_TODO:
-            todos[action.id] = action.data;
+            todos = todos.map(todo => {
+                if (todo.id === action.id) {
+                    todo.description = action.description
+                }
+                return todo;
+            })
+            console.log(todos);
             return {
                 ...state,
                 todos: todos

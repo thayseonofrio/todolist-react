@@ -14,10 +14,10 @@ export const deleteTodo = (id) => {
     }
 } 
 
-export const editTodo = (id, data) => {
+export const editTodo = (id, description) => {
     return {
-        type: actionTypes.DELETE_TODO,
+        type: actionTypes.EDIT_TODO,
         id: id,
-        data: data
+        description: description
     }
 } 
