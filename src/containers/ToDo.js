@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as todoActions from '../store/actions/todoActions';
+import Input from '../components/Input/Input';
 
 class ToDo extends Component {
 
@@ -23,7 +24,9 @@ class ToDo extends Component {
                 <ul>
                     {todos}
                 </ul>
-                <input onChange={(event) => this.onChangeHandler(event)} value={this.state.todoDescription}></input>
+                <Input 
+                    onInputChange={(event) => this.onChangeHandler(event)}
+                    value={this.state.todoDescription}/>
                 <button onClick={() => this.props.onAddTodo({
                     description: this.state.todoDescription,
                     id: Date.now()
