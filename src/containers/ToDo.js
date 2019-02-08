@@ -9,6 +9,16 @@ class ToDo extends Component {
         todoDescription: ''
     }
 
+    onKeyPressHandler = (event) => {
+        // TODO: handle ID 
+        if (event.key === 'Enter') {
+            this.props.onAddTodo({
+                description: this.state.todoDescription,
+                id: Date.now()
+            });
+        }
+    }
+
     onChangeHandler = (event) => {
         this.setState({
             todoDescription: event.target.value
@@ -25,12 +35,9 @@ class ToDo extends Component {
                     {todos}
                 </ul>
                 <Input 
+                    onInputKeyPress={(event) => this.onKeyPressHandler(event)}
                     onInputChange={(event) => this.onChangeHandler(event)}
                     value={this.state.todoDescription}/>
-                <button onClick={() => this.props.onAddTodo({
-                    description: this.state.todoDescription,
-                    id: Date.now()
-                })}> Add Todo </button>
             </div>
         );
     }
