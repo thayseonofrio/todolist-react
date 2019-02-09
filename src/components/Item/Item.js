@@ -4,7 +4,7 @@ import Input from '../Input/Input';
 import * as todoActions from '../../store/actions/todoActions';
 import classes from './Item.module.css';
 
-class Item extends Component {
+export class Item extends Component {
 
     state = {
         todoDescription: this.props.description,

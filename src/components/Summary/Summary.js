@@ -1,34 +1,50 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classes from './Summary.module.css';
 
-const summary = (props) => {
+export class Summary extends Component {
 
-    const getTotalTodos = () => {
-        return props.todos.length
+    state = {
+        total: 0,
+        completed: 0,
+        uncompleted: 0
     }
 
-    const getCompletedTodos = () => {
-        const completedTodos = props.todos.filter(todo => todo.done);
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            total: this.getTotalTodos(nextProps.todos),
+            completed: this.getCompletedTodos(nextProps.todos),
+            uncompleted: this.getUncompletedTodos(nextProps.todos)
+        })
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return this.state.todos !== nextProps.todos;
+    }
+
+    getTotalTodos = (todos) => {
+        return todos.length
+    }
+
+    getCompletedTodos = (todos) => {
+        const completedTodos = todos.filter(todo => todo.done);
         return completedTodos.length;
     }
 
-    const getUncompletedTodos = () => {
-        const uncompletedTodos = props.todos.filter(todo => !todo.done);
+    getUncompletedTodos = (todos) => {
+        const uncompletedTodos = todos.filter(todo => !todo.done);
         return uncompletedTodos.length;
     }
 
-    const total = getTotalTodos();
-    const completed = getCompletedTodos();
-    const uncompleted = getUncompletedTodos();
-
-    return (
-        <ul className={classes.Summary}>
-            <li> Total: {total} </li>
-            <li> Completed: {completed} </li>
-            <li> Not Completed: {uncompleted} </li>
-        </ul>
-    );
+    render () {
+        return (
+            <ul className={classes.Summary}>
+                <li> Total: {this.state.total} </li>
+                <li> Completed: {this.state.completed} </li>
+                <li> Not Completed: {this.state.uncompleted} </li>
+            </ul>
+        );
+    } 
 };
 
 const mapStateToProps = state => {
@@ -37,4 +53,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(summary);
+export default connect(mapStateToProps, null)(Summary);

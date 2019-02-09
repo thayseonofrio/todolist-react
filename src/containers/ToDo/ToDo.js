@@ -6,7 +6,7 @@ import Item from '../../components/Item/Item';
 import Summary from '../../components/Summary/Summary';
 import classes from './ToDo.module.css';
 
-class ToDo extends Component {
+export class ToDo extends Component {
 
     state = {
         todoDescription: ''
