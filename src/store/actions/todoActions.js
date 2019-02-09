@@ -1,18 +1,29 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 
+export const loadingAllTodos = () => {
+    return {
+        type: actionTypes.FETCH_START
+    }
+}
+
 export const fetchTodos = () => {
     return dispatch => {
-        // dispatch(loadingAllTodos());
+        dispatch(loadingAllTodos());
         axios.get('/todos.json')
         .then(response => {
             dispatch(setTodos(response.data));
         })
         .catch(error => {
-            console.log(error);
-            // dispatch(fetchTodosError(error));
+            dispatch(fetchTodosError());
         });
     };
+}
+
+export const fetchTodosError = () => {
+    return {
+        type: actionTypes.FETCH_FAIL
+    }
 }
 
 export const setTodos = (data) => {

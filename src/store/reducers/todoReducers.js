@@ -1,7 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    todos: []
+    todos: [],
+    loading: false
 }
 
 export const reducer = (state = initialState, action) => {
@@ -42,6 +43,16 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 todos: todos
             }
+        case actionTypes.FETCH_START:
+            return {
+                ...state,
+                loading: true
+            }
+        case actionTypes.FETCH_FAIL:
+            return {
+                ...state,
+                loading: false
+            }
         case actionTypes.SET_TODOS:
             for (const [ key, value ] of Object.entries(action.data)) {
                 todos.push({
@@ -49,10 +60,10 @@ export const reducer = (state = initialState, action) => {
                     id: key
                 })
             }
-            console.log(todos);
             return {
                 ...state,
-                todos: todos
+                todos: todos,
+                loading: false
             }
         default:
             return state;
