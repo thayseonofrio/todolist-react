@@ -46,7 +46,7 @@ export class Item extends Component {
     }
 
     onCheckboxClickHandler = () => {
-        this.props.onToggleTodo(this.props.id)
+        this.props.onToggleTodo(this.props.id, this.state.done);
         const previousDoneState = this.state.done;
         this.setState({
             done: !previousDoneState
@@ -88,7 +88,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onDeleteTodo: (id) => dispatch(todoActions.deleteTodo(id)),
         onEditTodo: (id, data) => dispatch(todoActions.editTodo(id, data)),
-        onToggleTodo: (id) => dispatch(todoActions.toggleTodo(id))
+        onToggleTodo: (id, done) => dispatch(todoActions.toggleTodo(id, done))
     }
 }
 

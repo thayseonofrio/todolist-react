@@ -1,4 +1,4 @@
-// TODO - Tests with jest and enzyme
 // TODO - add firebase connections
+// TODO - add error handler
 // TODO - refactor
 // TODO - publish 

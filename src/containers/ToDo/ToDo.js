@@ -12,12 +12,15 @@ export class ToDo extends Component {
         todoDescription: ''
     }
 
+    componentDidMount() {
+        this.props.onFetchTodos();
+    }
+
     onKeyPressHandler = (event) => {
         // TODO: handle ID 
         if (event.key === 'Enter') {
             this.props.onAddTodo({
                 description: this.state.todoDescription,
-                id: Date.now(),
                 done: false
             });
             this.setState({
@@ -68,7 +71,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddTodo: (data) => dispatch(todoActions.addTodo(data))
+        onAddTodo: (data) => dispatch(todoActions.addTodo(data)),
+        onFetchTodos: () => dispatch(todoActions.fetchTodos())
     };
 }
 
