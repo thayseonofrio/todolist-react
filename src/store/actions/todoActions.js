@@ -35,14 +35,12 @@ export const setTodos = (data) => {
 
 export const addTodo = (data) => {
     return dispatch => {
-        // dispatch(loadingTodo());
         axios.post('/todos.json', data)
         .then(response => {
             dispatch(addTodoSuccess(response.data.name, data));
         })
         .catch(error => {
             console.log(error);
-            // dispatch(addTodoError(error));
         });
     };
 };
@@ -55,17 +53,27 @@ export const addTodoSuccess = (id, data) => {
     }
 } 
 
+export const loadingTodo = () => {
+    return {
+        type: actionTypes.LOADING_TODO_START
+    }
+}
+
+export const loadingTodoError = () => {
+    return {
+        type: actionTypes.LOADING_TODO_ERROR
+    }
+}
+
 export const deleteTodo = (id) => {
     return dispatch => {
-        // dispatch(loadingTodo());
+        dispatch(loadingTodo());
         axios.delete('/todos/' + id + '.json')
         .then(response => {
-            console.log(response);
             dispatch(deleteTodoSuccess(id));
         })
         .catch(error => {
-            console.log(error);
-            // dispatch(todoError(error));
+            dispatch(loadingTodoError());
         });
     };
 };
@@ -79,14 +87,13 @@ export const deleteTodoSuccess = (id) => {
 
 export const editTodo = (id, description) => {
     return dispatch => {
-        // dispatch(loadingTodo());
+        dispatch(loadingTodo());
         axios.patch('/todos/' + id + '.json', { description: description })
         .then(response => {
             dispatch(editTodoSuccess(id, response.data.description));
         })
         .catch(error => {
-            console.log(error);
-            // dispatch(todoError(error));
+            dispatch(loadingTodoError());
         });
     };
 };
@@ -101,14 +108,13 @@ export const editTodoSuccess = (id, description) => {
 
 export const toggleTodo = (id, done) => {
     return dispatch => {
-        // dispatch(loadingTodo());
+        dispatch(loadingTodo());
         axios.patch('/todos/' + id + '.json', { done: !done })
         .then(response => {
             dispatch(toggleTodoSuccess(id, response.data.done));
         })
         .catch(error => {
-            console.log(error);
-            // dispatch(todoError(error));
+            dispatch(loadingTodoError());
         });
     };
 };

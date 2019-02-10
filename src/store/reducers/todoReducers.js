@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     todos: [],
-    loading: false
+    loadingAll: false,
+    loadingTodo: false
 }
 
 export const reducer = (state = initialState, action) => {
@@ -19,7 +20,8 @@ export const reducer = (state = initialState, action) => {
             todos = todos.filter(todo => todo.id !== action.id);
             return {
                 ...state,
-                todos: todos
+                todos: todos,
+                loadingTodo: false
             }
         case actionTypes.EDIT_TODO:
             todos = todos.map(todo => {
@@ -30,7 +32,8 @@ export const reducer = (state = initialState, action) => {
             });
             return {
                 ...state,
-                todos: todos
+                todos: todos,
+                loadingTodo: false
             }
         case actionTypes.TOGGLE_TODO:
             todos = todos.map(todo => {
@@ -41,17 +44,18 @@ export const reducer = (state = initialState, action) => {
             });
             return {
                 ...state,
-                todos: todos
+                todos: todos,
+                loadingTodo: false
             }
         case actionTypes.FETCH_START:
             return {
                 ...state,
-                loading: true
+                loadingAll: true
             }
         case actionTypes.FETCH_FAIL:
             return {
                 ...state,
-                loading: false
+                loadingAll: false
             }
         case actionTypes.SET_TODOS:
             for (const [ key, value ] of Object.entries(action.data)) {
@@ -63,7 +67,17 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 todos: todos,
-                loading: false
+                loadingAll: false
+            }
+        case actionTypes.LOADING_TODO_START:
+            return {
+                ...state,
+                loadingTodo: true
+            }
+        case actionTypes.LOADING_TODO_ERROR:
+            return {
+                ...state,
+                loadingTodo: false
             }
         default:
             return state;
