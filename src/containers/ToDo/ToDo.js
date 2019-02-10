@@ -19,6 +19,9 @@ export class ToDo extends Component {
 
     onKeyPressHandler = (event) => {
         if (event.key === 'Enter') {
+            if (this.state.todoDescription.length === 0) {
+                return;
+            } 
             this.props.onAddTodo({
                 description: this.state.todoDescription,
                 done: false
