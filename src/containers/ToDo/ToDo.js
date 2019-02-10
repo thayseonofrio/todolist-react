@@ -5,6 +5,7 @@ import Input from '../../components/Input/Input';
 import Item from '../../components/Item/Item';
 import Summary from '../../components/Summary/Summary';
 import classes from './ToDo.module.css';
+import Spinner from '../../components/Spinner/Spinner';
 
 export class ToDo extends Component {
 
@@ -17,7 +18,6 @@ export class ToDo extends Component {
     }
 
     onKeyPressHandler = (event) => {
-        // TODO: handle ID 
         if (event.key === 'Enter') {
             this.props.onAddTodo({
                 description: this.state.todoDescription,
@@ -37,6 +37,8 @@ export class ToDo extends Component {
 
     render() {
         let todos = null;
+        let todosPage = <Spinner />;
+
         if (this.props.todos) {
             todos = this.props.todos.map(todo => (
                 <Item 
@@ -46,18 +48,27 @@ export class ToDo extends Component {
                     done={todo.done} /> 
             ))
         }
+        
+        if (!this.props.loading) {
+            todosPage = (
+                <div>
+                    <Input 
+                        placeholder="Add a To Do"
+                        onInputKeyPress={(event) => this.onKeyPressHandler(event)}
+                        onInputChange={(event) => this.onChangeHandler(event)}
+                        value={this.state.todoDescription}/>
+                    <div className={classes.Items}>
+                        {todos}
+                    </div>
+                    <Summary />
+                </div>
+            )
+        }
+
         return (
             <div className={classes.ToDo}>
                 <h1> The Awesome To Do List </h1>
-                <Input 
-                    placeholder="Add a To Do"
-                    onInputKeyPress={(event) => this.onKeyPressHandler(event)}
-                    onInputChange={(event) => this.onChangeHandler(event)}
-                    value={this.state.todoDescription}/>
-                <div className={classes.Items}>
-                    {todos}
-                </div>
-                <Summary />
+                {todosPage}
             </div>
         );
     }
@@ -65,7 +76,8 @@ export class ToDo extends Component {
 
 const mapStateToProps = state => {
     return {
-        todos: state.todos
+        todos: state.todos,
+        loading: state.loadingAll
     };
 }
 

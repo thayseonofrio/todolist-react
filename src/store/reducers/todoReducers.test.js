@@ -7,7 +7,6 @@ describe('todo reducer', () => {
     it('should return inital state', () => {
         expect(reducer(undefined, { })).toEqual({
             loadingAll: false,
-            loadingTodo: false,
             todos: []
         });
     });
@@ -25,21 +24,18 @@ describe('todo reducer', () => {
 
     it('should delete todo', () => {
         expect(reducer({ 
-            todos: [  { ...mockTodos[0] } ],
-            loadingTodo: true
+            todos: [  { ...mockTodos[0] } ]
         }, {
             type: actionTypes.DELETE_TODO,
             id: mockTodos[0].id
         })).toEqual({
-            todos: [ ],
-            loadingTodo: false
+            todos: [ ]
         });
     });
 
     it('should edit todo', () => {
         expect(reducer({ 
-            todos: [  { ...mockTodos[0] } ],
-            loadingTodo: true
+            todos: [  { ...mockTodos[0] } ]
         }, {
             type: actionTypes.EDIT_TODO,
             id: mockTodos[0].id,
@@ -48,15 +44,13 @@ describe('todo reducer', () => {
             todos: [ {
                 ...mockTodos[0],
                 description: 'new description'
-            }],
-            loadingTodo: false
+            }]
         });
     });
 
     it('should toggle todo', () => {
         expect(reducer({ 
-            todos: [ { ...mockTodos[0] } ],
-            loadingTodo: true
+            todos: [ { ...mockTodos[0] } ]
         }, {
             type: actionTypes.TOGGLE_TODO,
             id: mockTodos[0].id,
@@ -65,8 +59,7 @@ describe('todo reducer', () => {
             todos: [ {
                 ...mockTodos[0],
                 done: true
-            }],
-            loadingTodo: false
+            }]
         });
     });
 

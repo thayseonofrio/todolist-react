@@ -5,5 +5,3 @@ export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const SET_TODOS = 'SET_TODOS';
 export const FETCH_START = 'FETCH_START';
 export const FETCH_FAIL = 'FETCH_FAIL';
-export const LOADING_TODO_START = 'LOADING_TODO_START';
-export const LOADING_TODO_ERROR = 'LOADING_TODO_ERROR';

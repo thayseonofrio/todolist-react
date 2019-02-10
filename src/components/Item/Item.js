@@ -64,6 +64,7 @@ export class Item extends Component {
             inputClasses.push(classes.done)
         }
         inputClasses = inputClasses.join(' ');
+
         return ( 
             <div className={classes.Item}>
                 <Input 

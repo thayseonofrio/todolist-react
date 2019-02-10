@@ -1,3 +1,2 @@
-// TODO - add error handler
-// TODO - refactor
-// TODO - publish 
+To Do list to practice React learnings.
+

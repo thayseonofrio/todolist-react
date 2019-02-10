@@ -2,83 +2,101 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     todos: [],
-    loadingAll: false,
-    loadingTodo: false
+    loadingAll: false
 }
 
-export const reducer = (state = initialState, action) => {
+const addTodo = (state, action) => {
+    const newTodo = action.data
+    newTodo['id'] = action.id
+    return {
+        ...state,
+        todos: state.todos.concat(newTodo)
+    }
+}
+
+const deleteTodo = (state, action) => {
     let todos = [...state.todos];
+    todos = todos.filter(todo => todo.id !== action.id);
+    return {
+        ...state,
+        todos: todos
+    }
+}
+
+const editTodo = (state, action) => {
+    let todos = [...state.todos];
+    todos = todos.map(todo => {
+        if (todo.id === action.id) {
+            todo.description = action.description
+        }
+        return todo;
+    });
+    return {
+        ...state,
+        todos: todos
+    }
+}
+
+const toggleTodo = (state, action) => {
+    let todos = [...state.todos];
+    todos = todos.map(todo => {
+        if (todo.id === action.id) {
+            todo.done = action.done
+        }
+        return todo;
+    });
+    return {
+        ...state,
+        todos: todos
+    }
+}
+
+const fetchStart = (state) => {
+    return {
+        ...state,
+        loadingAll: true
+    }
+}
+
+const fetchFail = (state) => {
+    return {
+        ...state,
+        loadingAll: false
+    }
+}
+
+const setTodos = (state, action) => {
+    let todos = [...state.todos];
+    for (const [ key, value ] of Object.entries(action.data)) {
+        todos.push({
+            ...value,
+            id: key
+        })
+    }
+    return {
+        ...state,
+        todos: todos,
+        loadingAll: false
+    }
+}
+
+
+export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_TODO:
-            const newTodo = action.data
-            newTodo['id'] = action.id
-            return {
-                ...state,
-                todos: state.todos.concat(newTodo)
-            }
+            return addTodo(state, action);
         case actionTypes.DELETE_TODO:
-            todos = todos.filter(todo => todo.id !== action.id);
-            return {
-                ...state,
-                todos: todos,
-                loadingTodo: false
-            }
+            return deleteTodo(state, action);
         case actionTypes.EDIT_TODO:
-            todos = todos.map(todo => {
-                if (todo.id === action.id) {
-                    todo.description = action.description
-                }
-                return todo;
-            });
-            return {
-                ...state,
-                todos: todos,
-                loadingTodo: false
-            }
+            return editTodo(state, action);
         case actionTypes.TOGGLE_TODO:
-            todos = todos.map(todo => {
-                if (todo.id === action.id) {
-                    todo.done = action.done
-                }
-                return todo;
-            });
-            return {
-                ...state,
-                todos: todos,
-                loadingTodo: false
-            }
+            return toggleTodo(state, action);
         case actionTypes.FETCH_START:
-            return {
-                ...state,
-                loadingAll: true
-            }
+            return fetchStart(state);
         case actionTypes.FETCH_FAIL:
-            return {
-                ...state,
-                loadingAll: false
-            }
+            return fetchFail(state);
         case actionTypes.SET_TODOS:
-            for (const [ key, value ] of Object.entries(action.data)) {
-                todos.push({
-                    ...value,
-                    id: key
-                })
-            }
-            return {
-                ...state,
-                todos: todos,
-                loadingAll: false
-            }
-        case actionTypes.LOADING_TODO_START:
-            return {
-                ...state,
-                loadingTodo: true
-            }
-        case actionTypes.LOADING_TODO_ERROR:
-            return {
-                ...state,
-                loadingTodo: false
-            }
+            return setTodos(state, action);
         default:
             return state;
     }
